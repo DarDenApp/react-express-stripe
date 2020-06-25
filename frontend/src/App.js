@@ -3,6 +3,7 @@ import scriptLoader from 'react-async-script-loader';
 import axios from 'axios';
 
 const CURRENCY = 'eur';
+const PAYMENT_SERVER_URL = 'http://ec2-18-189-14-50.us-east-2.compute.amazonaws.com:8081'
 
 const toCent = amount => amount * 100;
 
@@ -11,7 +12,7 @@ const StripeForm = ({ isScriptLoaded, isScriptLoadSucceed }) => {
 
   React.useEffect(() => {
     if (isScriptLoaded && isScriptLoadSucceed) {
-      setStripe(window.Stripe('YOUR_STRIPE_PUBLIC_KEY'));
+      setStripe(window.Stripe('pk_test_l53qXD5ejH6Aj6eR38R86ido00h6baFUeR'));
     }
   }, [isScriptLoaded, isScriptLoadSucceed]);
 
@@ -21,21 +22,20 @@ const StripeForm = ({ isScriptLoaded, isScriptLoadSucceed }) => {
     event.preventDefault();
 
     const session = await axios.post(
-      'https://api.example.com/payment/session-initiate',
+      'http://ec2-18-189-14-50.us-east-2.compute.amazonaws.com',
       {
-        customerEmail: 'example@gmail.com',
+        customerEmail: 'matt@dardenapp.com',
         clientReferenceId:
-          'IDENTIFIER_TO_MAP_YOUR_CUSTOMER_TO_YOUR_PRODUCT_LATER',
+          '0',
         lineItem: {
           name: 'My Name',
           description: 'My Description',
-          images: ['https://example.com/static/product.jpg'],
           amount: toCent(amount),
           currency: CURRENCY,
           quantity: 1,
         },
-        successUrl: 'https://example.com/success',
-        cancelUrl: 'https://example.com/cancel',
+        successUrl: 'http://ec2-18-189-14-50.us-east-2.compute.amazonaws.com/success',
+        cancelUrl: 'http://ec2-18-189-14-50.us-east-2.compute.amazonaws.com/cancel',
       }
     );
 

@@ -18,7 +18,7 @@ const paymentApi = app => {
       cancelUrl,
     } = req.body;
 
-    const stripe = Stripe('YOUR_STRIPE_SECRET_KEY');
+    const stripe = Stripe('sk_test_hUaCZqgcFBl9qGN8kSF9EkWz002TofxCyY\n');
 
     let session;
 
@@ -42,7 +42,7 @@ const paymentApi = app => {
   });
 
   app.post('/payment/session-complete', async (req, res) => {
-    const stripe = Stripe('YOUR_STRIPE_SECRET_KEY');
+    const stripe = Stripe('sk_test_hUaCZqgcFBl9qGN8kSF9EkWz002TofxCyY\n');
 
     let event;
 
@@ -50,7 +50,7 @@ const paymentApi = app => {
       event = stripe.webhooks.constructEvent(
         req.rawBody,
         req.headers['stripe-signature'],
-        'YOUR_STRIPE_WEBHOOK_SECRET'
+        'whsec_L3B8VcZohhg0n29KTL9xZiyBXUMGpHT5'
       );
     } catch (error) {
       return res.status(400).send(`Webhook Error: ${error.message}`);
